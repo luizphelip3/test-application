@@ -1,4 +1,5 @@
 function validatePassword(string){
+    let passowrd = string
 
     var errors = []
 
@@ -6,7 +7,7 @@ function validatePassword(string){
 
     const passowrdIsValid = {result, errors}
 
-    let passowrd = string
+    var specialCharacter = []
     
     if(passowrd.length < 16 | passowrd.length > 32 ){
         errors.push('Tamanho inválido')
@@ -14,8 +15,15 @@ function validatePassword(string){
 
     for (let i = 1; i <= password.length; i++){
         
-       console.log(passowrd.indexOf(i)) 
-    
+        if(password[i] == '?'){
+            specialCharacter += i
+        }
+
+        if(specialCharacter == 0){
+            errors.push('A senha não possui caracteres especiais')
+        }
+
+    return passowrdIsValid
     }
 
     if(passowrdIsValid.errors.length == 0){
@@ -25,5 +33,5 @@ function validatePassword(string){
     return passowrdIsValid
 }
 
-var password = '1234'
+var password = '1234?'
 console.log(validatePassword(password))
