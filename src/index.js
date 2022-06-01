@@ -1,37 +1,79 @@
-function validatePassword(string){
-    let passowrd = string
+const specialCharactersList = [
+  "!",
+  "@",
+  "#",
+  "$",
+  "%",
+  "&",
+  "*",
+  "(",
+  ")",
+  "-",
+  "_",
+  "=",
+  "+",
+  "[",
+  "]",
+  "{",
+  "}",
+];
 
-    var errors = []
+function validatePassword(string) {
+  let password = string;
 
-    var result = false
+  let errors = [];
 
-    const passowrdIsValid = {result, errors}
+  let result = false;
 
-    var specialCharacter = []
-    
-    if(passowrd.length < 16 | passowrd.length > 32 ){
-        errors.push('Tamanho inválido')
+  const passwordIsValid = { result, errors };
+
+  let specialCharacter = [];
+
+  let upperCaseLetter = [];
+
+  let lowerCaseLetter = [];
+
+  if (password.length < 16 || password.length > 32) {
+    errors.push("Tamanho inválido");
+  }
+
+  for (let i = 0; i <= password.length; i++) {
+    let actualCharacter = password.charAt(i);
+
+    if(specialCharactersList.find(element => element === actualCharacter)){
+      specialCharacter.push(i)
     }
 
-    for (let i = 1; i <= password.length; i++){
-        
-        if(password[i] == '?'){
-            specialCharacter += i
-        }
+    // if (actualCharacter == actualCharacter.toUpperCase()) {
+    //   upperCaseLetter.push(actualCharacter);
+    //   console.log(`Tamanho do array de letras maiusculas ${upperCaseLetter}`);
+    // }
 
-        if(specialCharacter == 0){
-            errors.push('A senha não possui caracteres especiais')
-        }
+    // if (password.charAt(i).toLowerCase() === password[i]) {
+    //   lowerCaseLetter.push(i);
+    // }
 
-    return passowrdIsValid
-    }
+    console.log(
+      `Tamanho do array de caracteres especiais: ${specialCharacter}`
+    );
+  }
 
-    if(passowrdIsValid.errors.length == 0){
-        passowrdIsValid.result = true
-    }
+  if (specialCharacter.length < 2) {
+    errors.push("A senha deve possuir pelo menos 2 caracteres especiais");
+  }
 
-    return passowrdIsValid
+  if (upperCaseLetter.length === 0) {
+    errors.push(
+      "A senha deve ter pelo menos uma letra maiúscula e uma letra minúscula"
+    );
+  }
+
+  if (passwordIsValid.errors.length == 0) {
+    passwordIsValid.result = true;
+  }
+
+  return passwordIsValid;
 }
 
-var password = '1234?'
-console.log(validatePassword(password))
+var password = "!1!234#";
+console.log(validatePassword(password));
