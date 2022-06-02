@@ -1,9 +1,12 @@
-import { Lists } from "./utils/lists.js";
+import { Lists } from "./utils/lists";
+
+// Criei uma constante que é um objeto que guarda o array de errors e o boolean result
+export type Response = { result: boolean; errors: string[] };
 
 // Aqui fica a função que faz todas as validações requeridas da senha
-function validatePassword(string) {
+function validatePassword(str: string) {
   // Instanciei o dado recebido na função dentro de uma variável
-  let password = string;
+  let password = str;
 
   // Instanciei um array de errors que vai servir como um acumulador de erros
   let errors = [];
@@ -13,7 +16,7 @@ function validatePassword(string) {
   let result = false;
 
   // Criei uma constante que é um objeto que guarda o array de errors e o boolean result
-  let passwordIsValid = { result, errors };
+  let response: Response = { result: false, errors:[] };
 
   // Criei uma variável que vai servir como um acumulador de caracteres especiais
   let specialCharacter = [];
@@ -32,7 +35,7 @@ function validatePassword(string) {
 
   // Aqui faço a primeira validação da senha que é saber se ela possui o tamanho de caracter válido
   if (password.length < 16 || password.length > 32) {
-    errors.push("Tamanho inválido");
+    response.errors.push("Tamanho inválido");
   }
 
   // aqui iniciamos o laço for pra validar caracter por caracter
@@ -99,9 +102,12 @@ function validatePassword(string) {
       // com base nos manuais do Unicode.
       // o if verifica se o valor do segundo índice é igual a soma do indice atual + 1 e se o terceiro índice
       // é igual à soma do índice atual + 2, se for, então é uma sequência de letras.
+      
+      let lowerPassword = password.toLowerCase()
+
       if (
-        password.charCodeAt(l + 1) == password.charCodeAt(l) + 1 &&
-        password.charCodeAt(l + 2) == password.charCodeAt(l) + 2
+        lowerPassword.charCodeAt(l + 1) == lowerPassword.charCodeAt(l) + 1 &&
+        lowerPassword.charCodeAt(l + 2) == lowerPassword.charCodeAt(l) + 2
       ) {
         hasSequentialLetters = true;
       }
@@ -111,13 +117,13 @@ function validatePassword(string) {
   // esse if verifica se o array de caracteres especiais possui menos que o mínimo, nesse caso 2 caractéres,
   // e se houver, ele insere no acumulador de erros esse retorno de erro.
   if (specialCharacter.length < 2) {
-    errors.push("A senha deve possuir pelo menos 2 caracteres especiais");
+    response.errors.push("A senha deve possuir pelo menos 2 caracteres especiais");
   }
 
   // esse if verifica se os arrays de letras maiúsculas e minúsculas possuem algum dado,
   // e se não houver ele insere no acumulador de erros esse retorno de erro.
   if (upperCaseLetter.length == 0 || lowerCaseLetter.length == 0) {
-    errors.push(
+    response.errors.push(
       "A senha deve ter pelo menos uma letra maiúscula e uma letra minúscula"
     );
   }
@@ -125,17 +131,17 @@ function validatePassword(string) {
   // esse if verifica se o boolean de números sequenciais é true,
   // e se for ele insere no acumulador de erros o retorno referente a este erro..
   if (hasSequentialNumbers || hasSequentialLetters) {
-    errors.push("A senha não pode conter caracteres sequenciais");
+    response.errors.push("A senha não pode conter caracteres sequenciais");
   }
-  
+
   // esse if verifica se o tamanho do acumulador de erros é igual
   // a 0 e se for, altera o estado de result para true
-  if (errors.length == 0) {
-    passwordIsValid.result = true
+  if (response.errors.length == 0) {
+    response.result = true;
   }
-  
-  return passwordIsValid;
+
+  return response;
 }
 
-var password = "n@ vERDADE a senha esta correta!";
+var password = "N@Verdade3EssaSenhaEhValida";
 console.log(validatePassword(password));
