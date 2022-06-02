@@ -4,19 +4,12 @@ import { Lists } from "./utils/lists";
 export type Response = { result: boolean; errors: string[] };
 
 // Aqui fica a função que faz todas as validações requeridas da senha
-function validatePassword(str: string) {
+function validatePassword(str: string): Response {
   // Instanciei o dado recebido na função dentro de uma variável
   let password = str;
 
-  // Instanciei um array de errors que vai servir como um acumulador de erros
-  let errors = [];
-
-  // Instanciei um dado boolean dentro da variável result que vai servir para
-  // validar se a senha é válida
-  let result = false;
-
   // Criei uma constante que é um objeto que guarda o array de errors e o boolean result
-  let response: Response = { result: false, errors:[] };
+  let response: Response = { result: false, errors: [] };
 
   // Criei uma variável que vai servir como um acumulador de caracteres especiais
   let specialCharacter = [];
@@ -85,6 +78,7 @@ function validatePassword(str: string) {
       // a condição é: se o número atual do índice (0) somado com 1 for igual ao valor do segundo índice (1)
       // e se o valor atual do indice (0) somado com 2 for igual ao valor do terceiro indice (2)
       // significa que os caracteres são uma sequência de 3 e seta a variável hasSequentialNumbers como true
+      
       if (
         +password[j + 1] == +password[j] + 1 &&
         +password[j + 2] == +password[j] + 2
@@ -97,13 +91,17 @@ function validatePassword(str: string) {
     }
 
     for (let l = 0; l < password.length; l++) {
+      // o método do charCodeAt() valida o valor unicode da letra, mas letras maiúsculas possuem unicode
+      // diferente das mesmas letras, porém minúsculas, então dentro desse for, e somente dentro dele,
+      // eu formatei a senha inteira para minúscula para poder fazer a verificação de forma com que funcione
+      // caso o usuário insira letras sequenciais utilizando maiúsculas e minúsculas ordenadamente.
+      let lowerPassword = password.toLowerCase();
+
       // esse if funciona da mesma forma que a validação de números sequenciais, mas utilizando letras
       // e para encontrar o valor de uma letra, eu utilizei o método charCodeAt, que verifica o valor da letra
       // com base nos manuais do Unicode.
       // o if verifica se o valor do segundo índice é igual a soma do indice atual + 1 e se o terceiro índice
       // é igual à soma do índice atual + 2, se for, então é uma sequência de letras.
-      
-      let lowerPassword = password.toLowerCase()
 
       if (
         lowerPassword.charCodeAt(l + 1) == lowerPassword.charCodeAt(l) + 1 &&
@@ -117,7 +115,9 @@ function validatePassword(str: string) {
   // esse if verifica se o array de caracteres especiais possui menos que o mínimo, nesse caso 2 caractéres,
   // e se houver, ele insere no acumulador de erros esse retorno de erro.
   if (specialCharacter.length < 2) {
-    response.errors.push("A senha deve possuir pelo menos 2 caracteres especiais");
+    response.errors.push(
+      "A senha deve possuir pelo menos 2 caracteres especiais"
+    );
   }
 
   // esse if verifica se os arrays de letras maiúsculas e minúsculas possuem algum dado,
@@ -143,5 +143,5 @@ function validatePassword(str: string) {
   return response;
 }
 
-var password = "N@Verdade3EssaSenhaEhValida";
+var password = "N@Verdade3EssaSenhaEhValida!";
 console.log(validatePassword(password));
