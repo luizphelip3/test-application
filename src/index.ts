@@ -4,7 +4,7 @@ import { Lists } from "./utils/lists";
 export type Response = { result: boolean; errors: string[] };
 
 // Aqui fica a função que faz todas as validações requeridas da senha
-function validatePassword(str: string): Response {
+export function validatePassword(str: string): Response {
   // Instanciei o dado recebido na função dentro de uma variável
   let password = str;
 
@@ -78,7 +78,7 @@ function validatePassword(str: string): Response {
       // a condição é: se o número atual do índice (0) somado com 1 for igual ao valor do segundo índice (1)
       // e se o valor atual do indice (0) somado com 2 for igual ao valor do terceiro indice (2)
       // significa que os caracteres são uma sequência de 3 e seta a variável hasSequentialNumbers como true
-      
+
       if (
         +password[j + 1] == +password[j] + 1 &&
         +password[j + 2] == +password[j] + 2
