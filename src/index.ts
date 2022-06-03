@@ -1,6 +1,6 @@
 import { Lists } from "./utils/lists";
 
-// Criei uma constante que é um objeto que guarda o array de errors e o boolean result
+// Criei um tipo Response que é um objeto que guarda um array de errors e um boolean result
 export type Response = { result: boolean; errors: string[] };
 
 // Aqui fica a função que faz todas as validações requeridas da senha
@@ -8,7 +8,7 @@ export function validatePassword(str: string): Response {
   // Instanciei o dado recebido na função dentro de uma variável
   let password = str;
 
-  // Criei uma constante que é um objeto que guarda o array de errors e o boolean result
+  // Criei uma constante possui o tipo Response e defini os valores default dela
   let response: Response = { result: true, errors: [] };
 
   // Criei uma variável que vai servir como um acumulador de caracteres especiais
