@@ -144,5 +144,5 @@ export function validatePassword(str: string): Response {
   return response;
 }
 
-var password = "NAOPASSAABC";
+var password = "SenhaMu!toM@aisDoQueVálida!";
 console.log(validatePassword(password));
