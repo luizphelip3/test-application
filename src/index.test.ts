@@ -102,13 +102,13 @@ describe("PasswordValidator", () => {
     expect(errors).toEqual([error]);
   });
 
-  test("Deve passar se a senha não tiver letras maiúsculas", () => {
+  test("Deve passar se a senha não tiver letras minúsculas", () => {
     // defini o valor de error igual o valor da validação desse erro do index.ts
-    const error = ["A senha deve ter pelo menos uma letra maiúscula e uma letra minúscula"];
+    const error = "A senha deve ter pelo menos uma letra maiúscula e uma letra minúscula";
     
     // instanciei a variável sut recebendo a função de validação de senha e passei como parâmetro
-    // uma senha que não tenha letras maiúsculas
-    sut = validatePassword("!!testedemaiusculas");
+    // uma senha que não tenha letras minúsculas
+    sut = validatePassword("!!TESTEDEMAIÚSCULAS");
 
     // aqui desestruturei o objeto de sut passando os valores do objeto que vou utilizar
     const { result, errors } = sut;
@@ -116,6 +116,39 @@ describe("PasswordValidator", () => {
     // aqui defini os valores esperados das propriedades de sut
     expect(result).toEqual(false);
     expect(errors).toEqual([error]);
+  });
+
+  test("Deve passar se a senha não se encaixar em nenhum parâmetro", () => {
+    // defini o valor de error igual o valor da validação desse cenário de erro do index.ts
+    const error = ['Tamanho inválido',
+    'A senha deve possuir pelo menos 2 caracteres especiais',
+    'A senha deve ter pelo menos uma letra maiúscula e uma letra minúscula',
+    'A senha não pode conter caracteres sequenciais'];
+    
+    // instanciei a variável sut recebendo a função de validação de senha e passei como parâmetro
+    // uma senha que não tenha se falhe em todos os casos
+    sut = validatePassword("NAOPASSARAABC");
+
+    // aqui desestruturei o objeto de sut passando os valores do objeto que vou utilizar
+    const { result, errors } = sut;
+
+    // aqui defini os valores esperados das propriedades de sut
+    expect(result).toEqual(false);
+    expect(errors).toEqual(error);
+  });
+
+  test("Deve passar se a senha for válida", () => {
+    
+    // instanciei a variável sut recebendo a função de validação de senha e passei como parâmetro
+    // uma senha que não tenha letras maiúsculas
+    sut = validatePassword("S3nh@Ma!sDoQueVálida!");
+
+    // aqui desestruturei o objeto de sut passando os valores do objeto que vou utilizar
+    const { result, errors } = sut;
+
+    // aqui defini os valores esperados das propriedades de sut
+    expect(result).toEqual(true);
+    expect(errors).toEqual([]);
   });
 
 });
