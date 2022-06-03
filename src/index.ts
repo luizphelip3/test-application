@@ -35,6 +35,7 @@ export function validatePassword(str: string): Response {
   for (let i = 0; i <= password.length; i++) {
     // defini uma variável que recebe o valor do índice atual utilizando charAt()
     let actualCharacter = password.charAt(i);
+    
 
     // usei o método find para verificar se o o valor do caracter atual é correspondente
     // a algum caracter especial que esteja dentro do array de caracter especial que criei
