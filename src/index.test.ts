@@ -9,7 +9,7 @@ describe("PasswordValidator", () => {
   // o default de Response (result como false e o array de errors vazio)
   beforeEach(() => {
     sut = {
-      result: false,
+      result: true,
       errors: [],
     };
   });
@@ -102,22 +102,6 @@ describe("PasswordValidator", () => {
     expect(errors).toEqual([error]);
   });
 
-  test("Deve passar se a senha não tiver letras minúsculas", () => {
-    // defini o valor de error igual o valor da validação desse erro do index.ts
-    const error = "A senha deve ter pelo menos uma letra maiúscula e uma letra minúscula";
-    
-    // instanciei a variável sut recebendo a função de validação de senha e passei como parâmetro
-    // uma senha que não tenha letras minúsculas
-    sut = validatePassword("!!TESTEDEMAIÚSCULAS");
-
-    // aqui desestruturei o objeto de sut passando os valores do objeto que vou utilizar
-    const { result, errors } = sut;
-
-    // aqui defini os valores esperados das propriedades de sut
-    expect(result).toEqual(false);
-    expect(errors).toEqual([error]);
-  });
-
   test("Deve passar se a senha não se encaixar em nenhum parâmetro", () => {
     // defini o valor de error igual o valor da validação desse cenário de erro do index.ts
     const error = ['Tamanho inválido',
@@ -140,7 +124,7 @@ describe("PasswordValidator", () => {
   test("Deve passar se a senha for válida", () => {
     
     // instanciei a variável sut recebendo a função de validação de senha e passei como parâmetro
-    // uma senha que não tenha letras maiúsculas
+    // uma senha que seja válida
     sut = validatePassword("S3nh@Ma!sDoQueVálida!");
 
     // aqui desestruturei o objeto de sut passando os valores do objeto que vou utilizar

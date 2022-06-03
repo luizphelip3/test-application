@@ -9,7 +9,7 @@ export function validatePassword(str: string): Response {
   let password = str;
 
   // Criei uma constante que é um objeto que guarda o array de errors e o boolean result
-  let response: Response = { result: false, errors: [] };
+  let response: Response = { result: true, errors: [] };
 
   // Criei uma variável que vai servir como um acumulador de caracteres especiais
   let specialCharacter = [];
@@ -137,8 +137,8 @@ export function validatePassword(str: string): Response {
 
   // esse if verifica se o tamanho do acumulador de erros é igual
   // a 0 e se for, altera o estado de result para true
-  if (response.errors.length == 0) {
-    response.result = true;
+  if (response.errors.length > 0) {
+    response.result = false;
   }
 
   return response;
